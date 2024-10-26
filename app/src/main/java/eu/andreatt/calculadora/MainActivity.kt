@@ -74,22 +74,22 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
             binding.btComma -> onNumberPressed(",")
 
-            binding.btPlus -> ""
+            binding.btPlus -> onOperationPressed("+")
 
-            binding.btMinus -> ""
+            binding.btMinus -> onOperationPressed("-")
 
-            binding.btMult -> ""
+            binding.btMult -> onOperationPressed("X")
 
-            binding.btDiv -> ""
+            binding.btDiv -> onOperationPressed("/")
 
-            binding.btEqual -> ""
+            binding.btEqual -> onEqualPressed()
 
             binding.btClear -> ""
 
         }
     }
 
-    private fun onNumberPressed(number: String){
+    private fun onNumberPressed(number:String){
         renderScreen(number)
         checkOperation()
     }
@@ -110,4 +110,28 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             secondNumber = binding.screen.text.toString().toDouble()
     }
 
+    private fun onOperationPressed(operation:String){
+        this.operation = operation
+        firstNumber = binding.screen.text.toString().toDouble()
+
+        binding.screen.text = "0"
+    }
+
+    private fun onEqualPressed(){
+        val result = when(operation){
+            "+" -> firstNumber + secondNumber
+            "-" -> firstNumber - secondNumber
+            "*" -> firstNumber * secondNumber
+            "/" -> firstNumber / secondNumber
+            else -> 0
+        }
+        operation = null
+        firstNumber = result.toDouble()
+
+        binding.screen.text = if (result.toString().endsWith("0")) {
+            result.toString().replace("0", "")
+        }else{
+            "%0.2f".format(result)
+        }
+    }
 }
