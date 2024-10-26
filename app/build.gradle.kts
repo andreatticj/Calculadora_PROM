@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
+    id("org.jetbrains.dokka") version "1.9.20" // Agrega el plugin Dokka
 }
 
 android {
@@ -58,4 +58,8 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.5.0")
     implementation("androidx.compose.material:material:1.5.0")
     implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
+}
+// Configura Dokka para generar el formato Javadoc
+tasks.dokkaJavadoc {
+    outputDirectory.set(buildDir.resolve("docs/javadoc"))
 }
