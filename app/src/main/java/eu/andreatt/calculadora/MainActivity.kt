@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
             binding.btEqual -> onEqualPressed()
 
-            binding.btClear -> ""
+            binding.btClear -> onClearPressed()
 
         }
     }
@@ -128,10 +128,22 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         operation = null
         firstNumber = result.toDouble()
 
-        binding.screen.text = if (result.toString().endsWith("0")) {
-            result.toString().replace("0", "")
-        }else{
-            "%0.2f".format(result)
+        try {
+            binding.screen.text = if (result.toString().endsWith("0")) {
+                result.toString().replace("0", "")
+            } else{
+                "%0.2f".format(result)
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
         }
+
+
+    }
+
+    private fun onClearPressed(){
+        binding.screen.text = "0"
+        firstNumber = 0.0
+        secondNumber = 0.0
     }
 }
